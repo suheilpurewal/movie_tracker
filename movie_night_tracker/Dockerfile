@@ -8,14 +8,14 @@ ENV LANG C.UTF-8
 # Set working directory
 WORKDIR /app
 
-# Install Python and pip
-RUN apk add --no-cache python3 py3-pip
+# Install system dependencies for building Python packages
+RUN apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev openssl-dev
 
-# Copy all files into the container
+# Copy application files into the container
 COPY . .
 
-# Install required Python packages
-RUN pip install -r requirements.txt
+# Install Python packages from requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the startup script and grant execute permissions
 COPY run.sh /run.sh
